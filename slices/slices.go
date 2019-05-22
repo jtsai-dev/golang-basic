@@ -7,7 +7,8 @@ func main() {
 	 * 数组是值类型
 	 * [3]int 和 [4]int 是不同的类型
 	 * slice 相当于数组的view 
-	 * cap 在被使用完后，会增长1倍当前的长度，即 cap *= 2
+	 * 添加元素如果超过cap，系统会重新分配更大的底层数组，
+	   会增长1倍当前的长度，即 cap *= 2
 	 */
 
 	arr := make([]int, 0)
@@ -39,10 +40,15 @@ func main() {
 	info(arr3)	// [2]
 	arr4 := arr3[0:2]
 	info(arr4)	// [2 3]：cap(arr3)=5，此时arr[0:2]未超过范围
-	fmt.Println(arr3[2])	// out of range: index > len(arr3)
+	// fmt.Println(arr3[2])	// out of range: index > len(arr3)
+
+	arr5 := arr2[2:6]
+	arr6 := append(arr5, 4)// arr5对应的arr2[6]被append为4
+	arr7 := append(arr6, 5)// arr7 不再是对arr2的view
+	fmt.Println(arr2, arr5, arr6, arr7)
 }
 
-func init() {
+func create() {
 	// arr1 := [...]int{ 0, 1, 2, 3, 4, 5, 6, 7 }
 	// arr2 := make([]int, 8)
 	// arr3 := arr1[0: 2]
