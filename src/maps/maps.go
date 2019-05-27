@@ -8,16 +8,27 @@ func main() {
 	// struct 也可以作为 key
 	maps := create()
 	maps = add(maps, "one", 1)
+	maps = add(maps, "one", 11)		// 重名覆盖
 	maps = add(maps, "two", 2)
 	foreach(maps)
 	fmt.Println(get(maps, "two"))
-	fmt.Println(get(maps, "three")) // 获取不存在key的value
+	fmt.Println(get(maps, "three"))
 	remove(maps, "two")
 	foreach(maps)
 }
 
 func create() map[string]int {
-	return make(map[string]int)
+	m1 := map[string]string{
+		"name": "jt",
+		"address": "china",
+	}
+	m1["name"] = "hello wold"
+
+	m2 := make(map[string]int)	// empty
+
+	// var m3 = map[string]int 	// nil
+
+	return m2
 }
 
 func add(maps map[string]int, key string, value int) map[string]int{
@@ -37,5 +48,10 @@ func remove(maps map[string]int, key string){
 }
 
 func get(maps map[string]int, key string) int{
-	return maps[key]
+	if num, ok := maps[key]; ok {
+		return num
+	} else {
+		fmt.Printf("key %q does not exist ", key)
+		return -1
+	}
 }

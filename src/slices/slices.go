@@ -3,20 +3,20 @@ package main
 import "fmt"
 
 func main() {
-	/* MARK
+	/* 
 	 * 数组是值类型
-	 * [3]int 和 [4]int 是不同的类型
+	 * [3]int 和 [4]int 是不同的数组类型
 	 * slice 相当于数组的view 
 	 * 添加元素如果超过cap，系统会重新分配更大的底层数组，
 	   会增长1倍当前的长度，即 cap *= 2
 	 */
 
-	arr := make([]int, 0)
-	for i := 0; i < 10; i++ {
-		arr = append(arr, i)
-	}
-
+	arr := create()
 	fmt.Println(arr)
+
+	arr1 := arr[2:]
+	updateSlice(arr1)
+	fmt.Println(arr, arr1)
 
 	fmt.Println(sub(arr, 1, 2))
 
@@ -28,12 +28,6 @@ func main() {
 
 	fmt.Println(tail(arr))
 	fmt.Println(arr)
-
-	arr1 := make([]int, 0)
-	for i := 0; i < 10; i++{
-		arr1 = append(arr1, i)
-		info(arr1)
-	}
 
 	arr2 := []int{ 0, 1, 2, 3, 4, 5, 6}
 	arr3 := arr2[2:3]
@@ -48,10 +42,16 @@ func main() {
 	fmt.Println(arr2, arr5, arr6, arr7)
 }
 
-func create() {
-	// arr1 := [...]int{ 0, 1, 2, 3, 4, 5, 6, 7 }
+func create() []int {
+	arr1 := []int{ 0, 1, 2, 3, 4, 5, 6, 7 }
 	// arr2 := make([]int, 8)
 	// arr3 := arr1[0: 2]
+
+	return arr1
+}
+
+func updateSlice(slice []int){
+	slice[0] = 100
 }
 
 func find(arr []int, target int) int{
