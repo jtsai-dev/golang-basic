@@ -1,11 +1,11 @@
 package main
 
 import (
-	"strconv"
-	"math"
-	"runtime"
-	"reflect"
 	"fmt"
+	"math"
+	"reflect"
+	"runtime"
+	"strconv"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	fmt.Println("after swap:", a, b)
 	fmt.Println(eval(a, b, "+"))
 	fmt.Println(eval(a, b, "%"))
-	
+
 	fmt.Println("pow(3, 4) is:", apply(
 		func(a int, b int) int {
 			return int(math.Pow(
@@ -25,20 +25,23 @@ func main() {
 	fmt.Println("convertToBin", convertToBin(2))
 }
 
+func sum(a, b int) int {
+	return a + b
+}
 
 // 返回多个值
 func div(a, b int) (int, int) {
-	return a/b, a%b
+	return a / b, a % b
 }
 func div1(a, b int) (q, r int) {
-	return a/b, a%b
+	return a / b, a % b
 }
 
-func swap(a, b int)(int, int){
+func swap(a, b int) (int, int) {
 	return b, a
 }
 
-func eval(a, b int, ops string) (int, error){
+func eval(a, b int, ops string) (int, error) {
 	switch ops {
 	case "*":
 		return a * b, nil
@@ -52,16 +55,16 @@ func eval(a, b int, ops string) (int, error){
 
 func apply(op func(int, int) int, a, b int) int {
 	p := reflect.ValueOf(op).Pointer()
-	opName := runtime.FuncForPC(p).Name()	// 获取传入的方法名
+	opName := runtime.FuncForPC(p).Name() // 获取传入的方法名
 	fmt.Printf("Calling function: %s with args "+
 		"(%d, %d)\n", opName, a, b)
 
 	return op(a, b)
 }
 
-func loopForever(){
+func loopForever() {
 	for {
-		fmt.Println("loop forever");
+		fmt.Println("loop forever")
 	}
 }
 

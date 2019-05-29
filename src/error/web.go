@@ -2,31 +2,46 @@ package main
 
 import (
 	"error/filehandling"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
 )
 
-func tryRecover() {
-	defer func() {
-		r := recover()
-		if err, ok := r.(error); ok {
-			fmt.Println("error occurred:", err)
-		} else {
-			panic(r)
-		}
-	}()
+type userError interface {
+	error
+	Message() string
 }
 
 type appHanlder func(writer http.ResponseWriter, request *http.Request) error
 
 func errorWrapper(handler appHanlder) func(http.ResponseWriter, *http.Request) {
 	return func(writer http.ResponseWriter, request *http.Request) {
+
+		// 使用 recover 捕获异常，避免 panic 导致的程序退出
+		defer func() {
+			r := recover()
+			if err, ok := r.(error); ok {
+				log.Printf("Panic: %v", r)
+				http.Error(
+					writer,
+					http.StatusText(http.StatusInternalServerError),
+					http.StatusInternalServerError)
+			} else {
+				log.Println("Unknowed error:", r, err)
+			}
+		}()
+
 		err := handler(writer, request)
+
 		if err != nil {
-			// 对 error 的分类处理
 			log.Printf("Error handing request: %s", err.Error())
+
+			// 自定义错误类型的处理
+			if userError, ok := err.(userError); ok {
+				http.Error(writer, userError.Message(), http.StatusBadRequest)
+				return
+			}
+
 			code := http.StatusOK
 			switch {
 			case os.IsNotExist(err):

@@ -6,7 +6,18 @@ import (
 	"os"
 )
 
+// 定义自定义异常类型
+type userError string
+
+func (e userError) Error() string {
+	return e.Message()
+}
+func (e userError) Message() string {
+	return string(e)
+}
+
 func HandleFile(writer http.ResponseWriter, request *http.Request) error {
+	panic(123)
 	path := request.URL.Path[1:]
 	file, err := os.Open(path)
 	if err != nil {
