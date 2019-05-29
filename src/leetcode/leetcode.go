@@ -7,9 +7,10 @@ import (
 )
 
 func main() {
-	result := sortedSquares([]int{-4, -1, 0, 3, 10})
+	fmt.Println(heightChecker([]int{1, 1, 4, 2, 1, 3}))
 
-	fmt.Println(result)
+	// result := sortedSquares([]int{-4, -1, 0, 3, 10})
+	// fmt.Println(result)
 }
 
 // 771
@@ -95,4 +96,66 @@ func sortedSquares(A []int) []int {
 	}
 	sort.Ints(result)
 	return result
+}
+
+// 884
+func uncommonFromSentences(A string, B string) []string {
+	var result []string
+	maps := make(map[string]int)
+	for _, k := range append(strings.Split(A, " "), strings.Split(B, " ")...) {
+		if num, ok := maps[k]; ok {
+			maps[k] = num + 1
+		} else {
+			maps[k] = 1
+		}
+	}
+
+	for k, v := range maps {
+		if v == 1 {
+			result = append(result, k)
+		}
+	}
+	return result
+}
+
+// 242
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+	ss := strings.Split(s, "")
+	tt := strings.Split(t, "")
+	sort.Strings(ss)
+	sort.Strings(tt)
+	for i, c := range ss {
+		if c != tt[i] {
+			return false
+		}
+	}
+	return true
+}
+
+// 520
+func detectCapitalUse(word string) bool {
+	if strings.ToUpper(word) == word ||
+		strings.ToLower(word) == word ||
+		strings.Title(strings.ToLower(word)) == word {
+		return true
+	}
+
+	return false
+}
+
+// 1051
+func heightChecker(heights []int) int {
+	source := make([]int, len(heights))
+	copy(source, heights)
+	sort.Ints(heights)
+	count := 0
+	for i, v := range source {
+		if v != heights[i] {
+			count++
+		}
+	}
+	return count
 }
