@@ -4,6 +4,27 @@ import (
 	"fmt"
 )
 
+func selects() {
+	ch1 := make(chan int)
+	ch2 := make(chan int)
+	// // 使用遍历的方式接收数据
+	// for {
+	// 	if _, ok := <-ch1; ok {
+
+	// 	}
+	// 	if _, ok := <-ch2; ok {
+	// 	}
+	// }
+	select {
+	case d := <-ch1:
+		fmt.Println(d)
+	case d := <-ch2:
+		fmt.Println(d)
+	default:
+		break
+	}
+}
+
 func worker(id int, c chan int) {
 	for {
 		v := <-c
@@ -22,20 +43,57 @@ func workerDemo() {
 	}
 }
 
+// 带缓冲通道的 channel
+//  当缓冲通道被填满时，尝试再次发送数据发生阻塞
+func bufferChannel() {
+	channel := make(chan int, 2) // 初始化一个数据类型为 int，带有2个元素缓冲区的通道
+	go func() {
+		for d := range channel {
+			fmt.Printf("len: %d\n", len(channel))
+			fmt.Println(d)
+		}
+	}()
+	channel <- 1
+	channel <- 2
+	channel <- 3
+}
+
+// 单向通道
+func unilateralDemo() {
+	// var sender chan<- int   // 只发送
+	// var receiver <-chan int // 只接收
+	// sender = make(chan<- int)
+	// receiver = make(<-chan int)
+}
+
+func loopReceve() {
+	c := make(chan int)
+	go func() {
+		for d := range c { // 循环接收数据
+			fmt.Println(d)
+		}
+	}()
+
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+}
+
 func channelDemo() {
 	c := make(chan int)
 	go func() {
 		for {
-			fmt.Println(<-c)
+			// d := <-c              // 阻塞接收数据：执行时阻塞，直到接收到数据并赋值给
+			if d, ok := <-c; ok { // 非阻塞接收数据
+				fmt.Println(d)
+			}
 		}
 	}()
 
-	c <- 1
-	c <- 2
-	c <- 3
-	c <- 4
-	c <- 5
-	// 最后的输入在 channelDemo 中未来得及输出，可尝试：
+	for i := 0; i < 5; i++ {
+		c <- i
+	}
+	// 最后的输入在 channelDemo 中可能未来得及输出，可尝试：
 	// time.Sleep(time.Millisecond)
 
 	// output:
@@ -54,7 +112,9 @@ func deadlock() {
 }
 
 func main() {
-	workerDemo()
+	// workerDemo()
+	bufferChannel()
+	// loopReceve()
 	// channelDemo()
 	// deadlock()
 }

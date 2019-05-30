@@ -7,7 +7,10 @@ import (
 )
 
 func main() {
-	fmt.Println(heightChecker([]int{1, 1, 4, 2, 1, 3}))
+	fmt.Println(lemonadeChange([]int{5, 5, 5, 10, 20}))
+	fmt.Println(lemonadeChange([]int{5, 5, 10}))
+	fmt.Println(lemonadeChange([]int{10, 10}))
+	fmt.Println(lemonadeChange([]int{5, 5, 10, 10, 20}))
 
 	// result := sortedSquares([]int{-4, -1, 0, 3, 10})
 	// fmt.Println(result)
