@@ -8,7 +8,7 @@ func main() {
 	// struct 也可以作为 key
 	maps := create()
 	maps = add(maps, "one", 1)
-	maps = add(maps, "one", 11)		// 重名覆盖
+	maps = add(maps, "one", 11) // 重名覆盖
 	maps = add(maps, "two", 2)
 	foreach(maps)
 	fmt.Println(get(maps, "two"))
@@ -19,35 +19,35 @@ func main() {
 
 func create() map[string]int {
 	m1 := map[string]string{
-		"name": "jt",
+		"name":    "jt",
 		"address": "china",
 	}
 	m1["name"] = "hello wold"
 
-	m2 := make(map[string]int)	// empty
+	m2 := make(map[string]int) // empty
 
 	// var m3 = map[string]int 	// nil
 
 	return m2
 }
 
-func add(maps map[string]int, key string, value int) map[string]int{
+func add(maps map[string]int, key string, value int) map[string]int {
 	maps[key] = value
 	return maps
 }
 
-func foreach(maps map[string]int){
+func foreach(maps map[string]int) {
 	// map 中无法保证顺序
 	for k, v := range maps {
 		fmt.Println(k, v)
 	}
 }
 
-func remove(maps map[string]int, key string){
+func remove(maps map[string]int, key string) {
 	delete(maps, key)
 }
 
-func get(maps map[string]int, key string) int{
+func get(maps map[string]int, key string) int {
 	if num, ok := maps[key]; ok {
 		return num
 	} else {

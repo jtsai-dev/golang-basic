@@ -56,6 +56,8 @@ func bufferChannel() {
 	channel <- 1
 	channel <- 2
 	channel <- 3
+	// 往 channel 中写入数据到缓冲通道，此时关闭通道（close(channel)），缓冲通道中
+	// 的数据不会被释放，通道也未消失，仍可从改关闭的 channel 中获取数据
 }
 
 // 单向通道
