@@ -10,10 +10,10 @@ import (
 // config
 const (
 	userName = "root"
-	password = "123456"
-	ip       = "127.0.0.1"
+	password = "xxx"
+	ip       = "xxx.xxx.xxx.xxx"
 	port     = "3306"
-	dbName   = "commonSpider"
+	dbName   = "common_spider"
 )
 
 var DB *sql.DB

@@ -14,7 +14,7 @@ type Rent struct {
 
 func CheckExist(id string) bool {
 	var count int
-	rows, err := DB.Query("SELECT COUNT(Id) FROM Rent WHERE Id = ? LIMIT 1", id)
+	rows, err := DB.Query("SELECT COUNT(Id) FROM rent WHERE Id = ? LIMIT 1", id)
 
 	if err != nil {
 		panic(err)
@@ -37,18 +37,18 @@ func CheckExist(id string) bool {
 func Insert(rent *Rent) bool {
 	tx, err := DB.Begin()
 	if err != nil {
-		fmt.Println("tx fail")
+		fmt.Println("tx fail", err.Error())
 		return false
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO Rent (`Id`, `Title`, `Author`, `Url`) VALUES (?, ?, ?, ?)")
+	stmt, err := tx.Prepare("INSERT INTO rent (`Id`, `Title`, `Author`, `Url`) VALUES (?, ?, ?, ?)")
 	if err != nil {
-		fmt.Println("Prepare fail")
+		fmt.Println("Prepare fail", err.Error())
 		return false
 	}
 	res, err := stmt.Exec(rent.Id, rent.Title, rent.Author, rent.Url)
 	if err != nil {
-		fmt.Println("Exec fail")
+		fmt.Println("Exec fail", err.Error())
 		return false
 	}
 
