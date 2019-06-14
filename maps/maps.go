@@ -6,6 +6,7 @@ func main() {
 	// map 使用哈希表，key 必须可以比较相等
 	// 除了 slice、map、function 的内建类型都可以作为key
 	// struct 也可以作为 key
+	// map 中不存在对应的 key 时，map[key] 返回对应的 zeroValue
 	maps := create()
 	maps = add(maps, "one", 1)
 	maps = add(maps, "one", 11) // 重名覆盖
