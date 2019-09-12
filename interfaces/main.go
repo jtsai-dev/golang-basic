@@ -5,8 +5,8 @@ import (
 
 	"time"
 
-	"interfaces/mock"
-	"interfaces/real"
+	"golang-basic/interfaces/mock"
+	"golang-basic/interfaces/real"
 )
 
 type Retriever interface {
@@ -44,6 +44,9 @@ func session(s RetrieverPoster) string {
 	return s.Get(url)
 }
 
+/*
+类型的方法集合中只要有接口所有方法的实现，即视为实现了接口，无需显示声明实现
+*/
 func main() {
 	var r Retriever
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"error/filehandling"
+	"golang-basic/error/filehandling"
 	"log"
 	"net/http"
 	"os"

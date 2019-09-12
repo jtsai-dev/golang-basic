@@ -23,8 +23,8 @@ func TestSum(t *testing.T) {
 }
 
 /* 性能测试：方法以 Benchmark 开头
- * 测试结果：BenchmarkSum-4   	2000000000	         0.36 ns/op	       0 B/op	       0 allocs/op
- * 							   运行次数				 每次运行的时长
+ * 测试结果：BenchmarkSum-4     	2000000000   0.36 ns/op	        0 B/op	       		 0 allocs/op
+ * 						 4个cpu	   运行次数		 平均每次耗时(纳秒)	 每次执行分配的内存		每次执行分配了0次对象
  */
 func BenchmarkSum(b *testing.B) {
 	numA, numB := 1, 2
